@@ -100,7 +100,7 @@ Resources:
             S3OriginConfig:
               # Restricting Bucket access through an origin access identity
               OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
-            OriginPath: !Sub /${DistOriginPath}
+            OriginPath: !Sub /${DistOriginPath}/${AWS::StackName}/browser
           - Id: !Sub ${ApiGatewayId}
             DomainName: !Sub "${ApiGatewayId}.execute-api.${AWSRegion}.amazonaws.com"
             CustomOriginConfig:
