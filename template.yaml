@@ -85,10 +85,10 @@ Resources:
             ResponsePagePath: !Sub /index.html
         # Aliases:
         #   - !Ref EnvDomainName
-        ViewerCertificate:
-          AcmCertificateArn: !Ref DomainCertificateArn
-          SslSupportMethod: sni-only
-          MinimumProtocolVersion: TLSv1
+        # ViewerCertificate:
+        #   AcmCertificateArn: !Ref DomainCertificateArn
+        #   SslSupportMethod: sni-only
+        #   MinimumProtocolVersion: TLSv1
         Comment: !Sub "CloudFront distribution for ${AWS::StackName}"
         DefaultRootObject: !Sub index.html
         Enabled: true
