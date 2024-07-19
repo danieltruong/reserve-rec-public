@@ -32,7 +32,7 @@ jobs:
 
       ### Install if no cache exists ###
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
@@ -42,7 +42,7 @@ jobs:
       ### Build if no cache exists ###
       - name: Cache Build
         id: cache-build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             **dist
@@ -63,7 +63,7 @@ jobs:
 
       ### Assume AWS IAM Role
       - name: Get AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
@@ -72,7 +72,7 @@ jobs:
       ### SAM Build
       - name: Cache SAM Build
         id: cache-sam-build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             **.aws-sam
@@ -87,7 +87,7 @@ jobs:
         env:
           STACK_NAME: ${{ vars.STACK_NAME }}
           DIST_ORIGIN_PATH: "latest"
-          API_GATEWAY_ID: ${{ vars.API_ID }}
+          API_GATEWAY_ID: ${{ vars.API_GATEWAY_ID }}
           ENV: ${{ vars.ENVIRONMENT_STAGE }}
           AWS_REGION: ${{ vars.AWS_REGION }}
           API_STAGE: ${{ vars.API_STAGE }}

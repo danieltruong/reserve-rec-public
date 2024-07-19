@@ -1,7 +1,6 @@
 version = 0.1
 
 [default]
-[default.global]
 [default.global.parameters]
 stack_name = "reserve-rec-public"
 
@@ -9,15 +8,19 @@ stack_name = "reserve-rec-public"
 cached = true
 parallel = true
 
-[default.deploy.parameters]
-capabilities = "CAPABILITY_IAM"
-confirm_changeset = true
+[default.validate.parameters]
+lint = true
+
+[default.package.parameters]
 resolve_s3 = true
 
 [default.sync.parameters]
 watch = true
 
 [default.local_start_api.parameters]
+warm_containers = "EAGER"
+
+[default.local_start_lambda.parameters]
 warm_containers = "EAGER"
 
 [default.deploy.parameters]
@@ -36,7 +39,6 @@ parameter_overrides=[
 ]
 
 [dev]
-[dev.global]
 [dev.global.parameters]
 stack_name = "reserve-rec-public"
 
@@ -44,15 +46,19 @@ stack_name = "reserve-rec-public"
 cached = true
 parallel = true
 
-[dev.deploy.parameters]
-capabilities = "CAPABILITY_IAM"
-confirm_changeset = true
+[dev.validate.parameters]
+lint = true
+
+[dev.package.parameters]
 resolve_s3 = true
 
 [dev.sync.parameters]
 watch = true
 
 [dev.local_start_api.parameters]
+warm_containers = "EAGER"
+
+[dev.local_start_lambda.parameters]
 warm_containers = "EAGER"
 
 [dev.deploy.parameters]
@@ -71,7 +77,6 @@ parameter_overrides=[
 ]
 
 [test]
-[test.global]
 [test.global.parameters]
 stack_name = "reserve-rec-public"
 
@@ -79,15 +84,19 @@ stack_name = "reserve-rec-public"
 cached = true
 parallel = true
 
-[test.deploy.parameters]
-capabilities = "CAPABILITY_IAM"
-confirm_changeset = true
+[test.validate.parameters]
+lint = true
+
+[test.package.parameters]
 resolve_s3 = true
 
 [test.sync.parameters]
 watch = true
 
 [test.local_start_api.parameters]
+warm_containers = "EAGER"
+
+[test.local_start_lambda.parameters]
 warm_containers = "EAGER"
 
 [test.deploy.parameters]
@@ -106,7 +115,6 @@ parameter_overrides=[
 ]
 
 [prod]
-[prod.global]
 [prod.global.parameters]
 stack_name = "reserve-rec-public"
 
@@ -114,15 +122,19 @@ stack_name = "reserve-rec-public"
 cached = true
 parallel = true
 
-[prod.deploy.parameters]
-capabilities = "CAPABILITY_IAM"
-confirm_changeset = true
+[prod.validate.parameters]
+lint = true
+
+[prod.package.parameters]
 resolve_s3 = true
 
 [prod.sync.parameters]
 watch = true
 
 [prod.local_start_api.parameters]
+warm_containers = "EAGER"
+
+[prod.local_start_lambda.parameters]
 warm_containers = "EAGER"
 
 [prod.deploy.parameters]
