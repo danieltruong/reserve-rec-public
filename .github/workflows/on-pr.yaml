@@ -1,4 +1,9 @@
----
+name: PR Checks
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft]
+  workflow_dispatch:
+
 jobs:
   install:
     name: Install
@@ -50,8 +55,3 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x]
-name: PR Checks
-'on':
-  pull_request:
-    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft]
-  workflow_dispatch: null
