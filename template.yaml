@@ -44,6 +44,7 @@ Resources:
       CloudFrontOriginAccessIdentityConfig:
         Comment: CloudFront access identity
 
+  # TODO: Move this to API SAM template
   CloudFrontAPICachePolicy:
     Type: AWS::CloudFront::CachePolicy
     Properties:
