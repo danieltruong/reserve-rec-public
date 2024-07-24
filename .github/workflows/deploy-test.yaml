@@ -1,20 +1,25 @@
-name: Deploy Reserve Rec Public Dev
+name: Deploy Reserve-Rec-Public Test
 
-run-name: Deploying ${{ github.ref_name }} to dev
+run-name: Deploying ${{ github.ref_name }} (Public) to test
 
 on:
   push:
-    branches: [main]
+    tags:
+      - "*"
   workflow_dispatch:
+    inputs:
+      releaseTag:
+        description: "Tag of version to be promoted to test"
+        required: true
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  deploy:
+  deploy-admin:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: test
     strategy:
       max-parallel: 1
       matrix:
@@ -28,7 +33,7 @@ jobs:
       #   env:
       #     WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
       #   run: |
-      #     curl -X POST -H 'Content-Type: application/json' $WEBHOOK_URL --data '{"text":"Reserve Rec - Deploy Public Dev"}'
+      #     curl -X POST -H 'Content-Type: application/json' $WEBHOOK_URL --data '{"text":"Reserve Rec - Deploy Public Test"}'
 
       ### Install if no cache exists ###
       - name: Setup node
@@ -36,19 +41,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
-          cache-dependency-path: "yarn.lock"
       - run: yarn install --silent --frozen-lockfile
 
       ### Build if no cache exists ###
-      - name: Cache Build
-        id: cache-build
+      - name: Cache Admin Build
+        id: cache-admin-build
         uses: actions/cache@v4
         with:
           path: |
-            **dist
-          key: ${{ github.sha }}-dist
+            **${{ vars.PDR_ADMIN_DIRECTORY }}/dist
+          key: ${{ github.sha }}-${{ vars.PDR_ADMIN_DIRECTORY }}-dist
       - name: Run yarn build
-        if: steps.cache-build.outputs.cache-hit != 'true'
+        if: steps.cache-admin-build.outputs.cache-hit != 'true'
         env:
           GH_HASH: ${{ github.sha }}
         run: |
@@ -63,7 +67,7 @@ jobs:
 
       ### Assume AWS IAM Role
       - name: Get AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
@@ -72,7 +76,7 @@ jobs:
       ### SAM Build
       - name: Cache SAM Build
         id: cache-sam-build
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: |
             **.aws-sam
@@ -125,4 +129,4 @@ jobs:
       #   env:
       #     WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
       #   run: |
-      #     curl -X POST -H 'Content-Type: application/json' $WEBHOOK_URL --data '{"text":"Reserve Rec Deploy Public Dev Complete"}'
+      #     curl -X POST -H 'Content-Type: application/json' $WEBHOOK_URL --data '{"text":"Reserve Rec - Deploy Public Test Complete"}'

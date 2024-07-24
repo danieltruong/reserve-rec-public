@@ -36,6 +36,9 @@ Parameters:
   DomainCertificateArn:
     Type: String
     Default: arn:aws:acm:us-east-1:970582042516:certificate/ef1d2666-8278-4d20-bdff-e27b55b3246f
+  ApiCachePolicyId:
+    Type: String
+    Description: API cache policy ID.
 
 Resources:
   CloudFrontOriginAccessIdentity:
@@ -45,27 +48,27 @@ Resources:
         Comment: CloudFront access identity
 
   # TODO: Move this to API SAM template
-  CloudFrontAPICachePolicy:
-    Type: AWS::CloudFront::CachePolicy
-    Properties:
-      CachePolicyConfig:
-        Comment: "Custom CloudFront Caching Policy to allow the Authorization header through to the Origins."
-        DefaultTTL: 1
-        MaxTTL: 1
-        MinTTL: 1
-        Name: !Sub ${ApiGatewayId}-CFCachePolicy
-        ParametersInCacheKeyAndForwardedToOrigin:
-          CookiesConfig:
-            CookieBehavior: none
-          EnableAcceptEncodingBrotli: false
-          EnableAcceptEncodingGzip: false
-          HeadersConfig:
-            HeaderBehavior: whitelist
-            Headers:
-              - Authorization
-              - X-Api-Key
-          QueryStringsConfig:
-            QueryStringBehavior: all
+  # CloudFrontAPICachePolicy:
+  #   Type: AWS::CloudFront::CachePolicy
+  #   Properties:
+  #     CachePolicyConfig:
+  #       Comment: "Custom CloudFront Caching Policy to allow the Authorization header through to the Origins."
+  #       DefaultTTL: 1
+  #       MaxTTL: 1
+  #       MinTTL: 1
+  #       Name: !Sub ${ApiGatewayId}-CFCachePolicy
+  #       ParametersInCacheKeyAndForwardedToOrigin:
+  #         CookiesConfig:
+  #           CookieBehavior: none
+  #         EnableAcceptEncodingBrotli: false
+  #         EnableAcceptEncodingGzip: false
+  #         HeadersConfig:
+  #           HeaderBehavior: whitelist
+  #           Headers:
+  #             - Authorization
+  #             - X-Api-Key
+  #         QueryStringsConfig:
+  #           QueryStringBehavior: all
 
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
