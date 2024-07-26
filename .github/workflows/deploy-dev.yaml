@@ -95,7 +95,7 @@ jobs:
           AWS_CERTIFICATE_ARN: ${{ vars.AWS_CERTIFICATE_ARN }}
           API_CACHE_POLICY_ID: ${{ vars.API_CACHE_POLICY_ID }}
         run: |
-          sam deploy --stack-name $STACK_NAME --no-confirm-changeset --no-fail-on-empty-changeset --capabilities CAPABILITY_NAMED_IAM --parameter-overrides\
+          sam deploy --stack-name $STACK_NAME --no-confirm-changeset --no-fail-on-empty-changeset --capabilities CAPABILITY_NAMED_IAM --parameter-overrides \
           DistOriginPath=$DIST_ORIGIN_PATH \
           ApiGatewayId=$API_GATEWAY_ID \
           Env=$ENV \
