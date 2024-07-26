@@ -137,7 +137,7 @@ Resources:
               - PATCH
               - DELETE
             # CachingDisabled
-            CachePolicyId: !Ref CloudFrontAPICachePolicy
+            CachePolicyId: !Ref ApiCachePolicyId
             TargetOriginId: !Sub ${ApiGatewayId}
             ViewerProtocolPolicy: redirect-to-https
             # Simple CORS
