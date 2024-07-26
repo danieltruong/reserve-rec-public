@@ -1,6 +1,6 @@
-name: Deploy Reserve-Rec-Public Test
+name: Deploy Reserve-Rec-Public Prod
 
-run-name: Deploying ${{ github.ref_name }} (Public) to test
+run-name: Deploying ${{ github.ref_name }} (Public) to prod
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       releaseTag:
-        description: "Tag of version to be promoted to test"
+        description: "Tag of version to be promoted to prod"
         required: true
 
 permissions:
@@ -19,7 +19,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: test
+    environment: prod
     strategy:
       max-parallel: 1
       matrix:
@@ -33,7 +33,7 @@ jobs:
       #   env:
       #     WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
       #   run: |
-      #     curl -X POST -H 'Content-Type: application/json' $WEBHOOK_URL --data '{"text":"Reserve Rec - Deploy Public Test"}'
+      #     curl -X POST -H 'Content-Type: application/json' $WEBHOOK_URL --data '{"text":"Reserve Rec - Deploy Public Prod"}'
 
       ### Install if no cache exists ###
       - name: Setup node
@@ -129,4 +129,4 @@ jobs:
       #   env:
       #     WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
       #   run: |
-      #     curl -X POST -H 'Content-Type: application/json' $WEBHOOK_URL --data '{"text":"Reserve Rec - Deploy Public Test Complete"}'
+      #     curl -X POST -H 'Content-Type: application/json' $WEBHOOK_URL --data '{"text":"Reserve Rec - Deploy Public Prod Complete"}'
