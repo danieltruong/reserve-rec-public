@@ -3,9 +3,6 @@ name: Deploy Reserve-Rec-Public Prod
 run-name: Deploying ${{ github.ref_name }} (Public) to prod
 
 on:
-  push:
-    tags:
-      - "*"
   workflow_dispatch:
     inputs:
       releaseTag:
@@ -67,7 +64,7 @@ jobs:
 
       ### Assume AWS IAM Role
       - name: Get AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
@@ -76,7 +73,7 @@ jobs:
       ### SAM Build
       - name: Cache SAM Build
         id: cache-sam-build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             **.aws-sam
