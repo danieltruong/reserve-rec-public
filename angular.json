@@ -34,9 +34,13 @@
               "src/env.js"
             ],
             "styles": [
+              "node_modules/@digitalspace/bcparks-bootstrap-theme/dist/css/bootstrap-theme.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/@digitalspace/bcparks-bootstrap-theme/dist/js/bootstrap-theme.min.js"
+            ]
           },
           "configurations": {
             "production": {
