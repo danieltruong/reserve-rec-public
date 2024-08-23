@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { ConfigService } from '../services/config.service';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
-export class FooterComponent {
+export class FooterComponent implements OnInit {
   public GH_HASH: string;
   constructor(private configService: ConfigService) {
   }

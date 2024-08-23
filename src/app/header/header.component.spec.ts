@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
+import { LoggerService } from '../services/logger.service';
+import { ConfigService } from '../services/config.service';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -8,9 +10,10 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent]
+      imports: [HeaderComponent],
+      providers: [LoggerService, { provide: ConfigService, useValue: {} }]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;

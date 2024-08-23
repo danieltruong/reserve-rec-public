@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { LoggerService } from './logger.service';
 
 declare global {
   interface Window { __env: any; }
@@ -16,7 +17,7 @@ export class ConfigService {
   private configuration: any = {};
   private build: any = '';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private loggerService: LoggerService) { }
   /**
    * Initialize the Config Service.  Get configuration data from front-end build, or back-end if nginx
    * is configured to pass the /config endpoint to a dynamic service that returns JSON.
@@ -67,6 +68,7 @@ export class ConfigService {
       try {
         return (await firstValueFrom(this.httpClient.get<any>(`/api/config`)))['data'];
       } catch (err) {
+        this.loggerService.error(err);
         const delay = n1 + n2;
         await this.delay(delay * 1000);
         n1 = n2;
