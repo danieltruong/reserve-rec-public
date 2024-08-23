@@ -11,7 +11,7 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HeaderComponent],
-      providers: [LoggerService, { provide: ConfigService, useValue: {} }]
+      providers: [LoggerService, ConfigService]
     })
       .compileComponents();
 
