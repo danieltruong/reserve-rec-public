@@ -6,7 +6,7 @@ import { ConfigService } from './config.service';
 describe('LoggerService', () => {
   let service: LoggerService;
 
-  let mockConfigService = {
+  const mockConfigService = {
     logLevel: LogLevel.Info,
   };
 
