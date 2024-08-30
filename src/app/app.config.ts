@@ -4,10 +4,12 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { ConfigService } from './services/config.service';
 import { provideHttpClient } from '@angular/common/http';
+import { ApiService } from './services/api.service';
 
-export function initConfig(configService: ConfigService) {
+export function initConfig(configService: ConfigService, apiService: ApiService) {
   return async () => {
     await configService.init();
+    apiService.init();
   };
 }
 
@@ -19,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_INITIALIZER,
       useFactory: initConfig,
-      deps: [ConfigService],
+      deps: [ConfigService, ApiService],
       multi: true
     },
     ConfigService

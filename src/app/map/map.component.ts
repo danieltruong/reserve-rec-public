@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import * as env from '../../../src/env';
 import { ConfigService } from '../services/config.service';
+import { SearchService } from '../services/search.service';
+import { DataService } from '../services/data.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { Constants } from '../constants';
 
 @Component({
   standalone: true,
@@ -15,10 +18,18 @@ export class MapComponent implements OnInit {
   style = 'mapbox://styles/mapbox/streets-v11';
   lat: number = 48.4359;
   lng: number = -123.3515;
+  public subscriptions = new Subscription();
+  public items = [];
+  public list = new BehaviorSubject([]);
 
-  constructor(private configService: ConfigService) { }
+  constructor(
+    private configService: ConfigService,
+    private searchService: SearchService,
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.map = new mapboxgl.Map({
       accessToken: this.configService.config['MAPBOX_API_KEY'],
       container: 'map',
@@ -26,5 +37,21 @@ export class MapComponent implements OnInit {
       zoom: 13,
       center: [this.lng, this.lat]
     });
+    await this.searchService.fetchAll();
+    this.subscriptions.add(
+      this.dataService.watchItem(Constants.dataIds.ALL).subscribe((data) => {
+        console.log("data", data);
+        if (data?.length) {
+          // Set data somewhere
+        } else {
+          this.list.next([]);
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+    this.cdr.detectChanges();
   }
 }
