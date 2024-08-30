@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, OnDestroy } from '@angular/core';
-import { Subscription, merge, of, fromEvent, map, throwError, catchError, lastValueFrom } from 'rxjs';
+import { Subscription, merge, of, fromEvent, map, throwError, catchError } from 'rxjs';
 import { ConfigService } from './config.service';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { ConfigService } from './config.service';
 export class ApiService implements OnDestroy {
   public token: string;
   public isMS: boolean; // IE, Edge, etc
-  networkStatus: boolean = false;
+  networkStatus = false;
   networkStatus$: Subscription = Subscription.EMPTY;
   private headers;
   private http: HttpClient;
@@ -74,7 +74,7 @@ export class ApiService implements OnDestroy {
 
   get(pk, queryParamsObject = null as any) {
     if (this.networkStatus) {
-      let queryString = this.generateQueryString(queryParamsObject);
+      const queryString = this.generateQueryString(queryParamsObject);
       return this.http.get(`${this.apiPath}/${pk}?${queryString}`)
              .pipe(catchError(this.errorHandler));
     } else {
@@ -93,7 +93,7 @@ export class ApiService implements OnDestroy {
 
   post(pk, obj, queryParamsObject = null as any) {
     if (this.networkStatus) {
-      let queryString = this.generateQueryString(queryParamsObject);
+      const queryString = this.generateQueryString(queryParamsObject);
       return this.http
         .post<any>(`${this.apiPath}/${pk}?${queryString}`, obj, { headers: this.headers })
         .pipe(catchError(this.errorHandler));
@@ -104,7 +104,7 @@ export class ApiService implements OnDestroy {
 
   delete(pk, queryParamsObject = null as any) {
     if (this.networkStatus) {
-      let queryString = this.generateQueryString(queryParamsObject);
+      const queryString = this.generateQueryString(queryParamsObject);
       return this.http
         .delete<any>(`${this.apiPath}/${pk}?${queryString}`, { headers: this.headers })
         .pipe(catchError(this.errorHandler));
@@ -116,7 +116,7 @@ export class ApiService implements OnDestroy {
   private generateQueryString(queryParamsObject) {
     let queryString = '';
     if (queryParamsObject) {
-      for (let key of Object.keys(queryParamsObject)) {
+      for (const key of Object.keys(queryParamsObject)) {
         queryString += `&${key}=${queryParamsObject[key]}`;
       }
       queryString = queryString.substring(1);

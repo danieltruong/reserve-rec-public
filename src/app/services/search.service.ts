@@ -18,11 +18,11 @@ export class SearchService {
 
 
   async fetchAll() {
-    let queryParams = {
+    const queryParams = {
       text: 'all',
     };
     try {
-      let res: any[] = (await lastValueFrom(this.apiService.get(`search`, queryParams)))['data']['hits'];
+      const res: any[] = (await lastValueFrom(this.apiService.get(`search`, queryParams)))['data']['hits'];
       this.dataService.setItemValue(Constants.dataIds.ALL, res);
     } catch (error) {
       this.loggerService.error(error);

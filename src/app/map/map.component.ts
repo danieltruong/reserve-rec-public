@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { ConfigService } from '../services/config.service';
 import { SearchService } from '../services/search.service';
@@ -13,11 +13,11 @@ import { Constants } from '../constants';
   styleUrls: ['./map.component.css']
 })
 
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
   map: mapboxgl.Map | undefined;
   style = 'mapbox://styles/mapbox/streets-v11';
-  lat: number = 48.4359;
-  lng: number = -123.3515;
+  lat = 48.4359;
+  lng = -123.3515;
   public subscriptions = new Subscription();
   public items = [];
   public list = new BehaviorSubject([]);

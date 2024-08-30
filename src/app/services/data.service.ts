@@ -41,7 +41,7 @@ export class DataService {
   }
 
   // Merge object data to existing dataService id
-  mergeItemValue(id, value, attribute = null): any {
+  mergeItemValue(id, value): any {
     // We cannot merge to an undefined object
     if (!this.checkIfDataExists(id) || !this.getItemValue(id)) {
       this.setItemValue(id, value);
@@ -108,7 +108,7 @@ export class DataService {
     if (!this.checkIfDataExists(id)) {
       this.initCacheItem(id);
     }
-    let cache: cacheData = {
+    const cache: cacheData = {
       data: value,
       expiry: null
     }
