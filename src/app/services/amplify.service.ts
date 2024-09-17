@@ -18,7 +18,7 @@ export class AmplifyService {
           identityPoolId: this.configService.config['IDENTITY_POOL_ID'],
           loginWith: {
             oauth: {
-              domain: 'reserve-rec-dev.auth.ca-central-1.amazoncognito.com',
+              domain: this.configService.config['OAUTH_DOMAIN'],
               scopes: ['openid', 'email', 'profile', 'aws.cognito.signin.user.admin'],
               redirectSignIn: ['http://localhost:4200'],
               redirectSignOut: ['http://localhost:4200'],

@@ -18,6 +18,7 @@
   window.__env.USER_POOL_ID = "USER_POOL_ID";
   window.__env.USER_POOL_CLIENT_ID = "USER_POOL_CLIENT_ID";
   window.__env.IDENTITY_POOL_ID = "IDENTITY_POOL_ID";
+  window.__env.OAUTH_DOMAIN = "reserve-rec-dev.auth.ca-central-1.amazoncognito.com";
 
   // Add any feature-toggles
   // window.__env.coolFeatureActive = false;
