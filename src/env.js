@@ -13,7 +13,6 @@
   window.__env.API_LOCATION = "http://localhost:3000";
   window.__env.API_PATH = "/api";
   window.__env.GH_HASH = "local-build";
-  window.__env.MAPBOX_API_KEY = "pk.eyJ1IjoiZHRydW9uZyIsImEiOiJjbTA3Y2llbXYwYjlhMmpuMWoyMXdzeWZrIn0.fmMD412QsUKQi05HySZzUg";
 
   window.__env.USER_POOL_ID = "USER_POOL_ID";
   window.__env.USER_POOL_CLIENT_ID = "USER_POOL_CLIENT_ID";
