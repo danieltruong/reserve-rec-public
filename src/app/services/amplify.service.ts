@@ -19,7 +19,6 @@ export class AmplifyService {
           loginWith: {
             oauth: {
               domain: 'reserve-rec-dev.auth.ca-central-1.amazoncognito.com',
-              providers: ["Google"],
               scopes: ['openid', 'email', 'profile', 'aws.cognito.signin.user.admin'],
               redirectSignIn: ['http://localhost:4200'],
               redirectSignOut: ['http://localhost:4200'],
