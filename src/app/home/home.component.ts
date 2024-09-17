@@ -9,7 +9,6 @@ import { fetchAuthSession, signInWithRedirect, signOut } from 'aws-amplify/auth'
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  constructor() { }
 
   async ngOnInit() {
     const session = await fetchAuthSession();
