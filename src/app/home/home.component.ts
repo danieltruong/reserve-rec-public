@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { fetchAuthSession, signInWithRedirect, signOut } from 'aws-amplify/auth';
 
 @Component({
   selector: 'app-home',
@@ -11,15 +10,5 @@ import { fetchAuthSession, signInWithRedirect, signOut } from 'aws-amplify/auth'
 export class HomeComponent implements OnInit {
 
   async ngOnInit() {
-    const session = await fetchAuthSession();
-    console.log("session", session);
   }
-
-  public async onLoginCLick() {
-    await signInWithRedirect();
-  }
-  public async onLogoutCLick() {
-    await signOut();
-  }
-
 }
