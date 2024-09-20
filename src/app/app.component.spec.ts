@@ -18,17 +18,4 @@ describe('AppComponent', () => {
   it('should create the app', () => {
     expect(true).toBeTruthy();
   });
-
-  // it(`should have the 'reserve-rec-public' title`, () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   const app = fixture.componentInstance;
-  //   expect(app.title).toEqual('reserve-rec-public');
-  // });
-
-  // it('should render title', () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   fixture.detectChanges();
-  //   const compiled = fixture.nativeElement as HTMLElement;
-  //   expect(compiled.querySelector('h1')?.textContent).toContain('Hello, reserve-rec-public');
-  // });
 });

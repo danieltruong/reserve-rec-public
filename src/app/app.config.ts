@@ -5,12 +5,12 @@ import { routes } from './app.routes';
 import { ConfigService } from './services/config.service';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { ApiService } from './services/api.service';
-import { AmplifyService } from './services/amplify.service';
+import { AuthService } from './services/auth.service';
 
-export function initConfig(configService: ConfigService, apiService: ApiService, amplifyService: AmplifyService) {
+export function initConfig(configService: ConfigService, apiService: ApiService, authService: AuthService) {
   return async () => {
     await configService.init();
-    await amplifyService.init();
+    await authService.init();
     apiService.init();
   };
 }
@@ -23,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_INITIALIZER,
       useFactory: initConfig,
-      deps: [ConfigService, ApiService, AmplifyService, HttpClient],
+      deps: [ConfigService, ApiService, AuthService, HttpClient],
       multi: true
     },
     ConfigService
