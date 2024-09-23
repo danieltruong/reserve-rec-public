@@ -117,8 +117,9 @@ export class AuthService {
   async setRefresh(forceRefresh = false) {
     this.session.set(await fetchAuthSession({ forceRefresh: forceRefresh }));
     this.loggerService.debug(JSON.stringify(this.session(), null, 2));
-    const expiresIn = (this.session().tokens.accessToken.payload.exp * 1000) - Date.now();
-    if (expiresIn > 0) {
+    // Set refresh to half the expiry time
+    const refreshInterval = ((this.session().tokens.accessToken.payload.exp * 1000) - Date.now()) / 2;
+    if (refreshInterval > 0) {
       setTimeout(async () => {
         try {
           await this.setRefresh(true);
@@ -126,7 +127,7 @@ export class AuthService {
         } catch (error) {
           console.error('Error refreshing token:', error);
         }
-      }, expiresIn);
+      }, refreshInterval);
     }
   }
 }
