@@ -1,20 +1,15 @@
 <div class="d-flex justify-content-between flex-column vh-100">
-    <div>
-        <app-header></app-header>
-    </div>
+  <div>
+    <app-header></app-header>
+  </div>
 
-    <amplify-authenticator>
-      <ng-template amplifySlot="authenticated" let-user="user" let-signOut="signOut">
-        <h1>Welcome {{ user.signInDetails.loginId }}!</h1>
-        <button (click)="signOut()">Sign Out</button>
-      </ng-template>
-    </amplify-authenticator>
+  <app-login></app-login>
 
-    <div class="flex-grow-1">
-        <router-outlet />
-    </div>
+  <div class="flex-grow-1">
+    <router-outlet />
+  </div>
 
-    <div>
-        <app-footer></app-footer>
-    </div>
+  <div>
+    <app-footer></app-footer>
+  </div>
 </div>
