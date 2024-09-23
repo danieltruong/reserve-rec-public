@@ -5,7 +5,6 @@
 
   // Get config from remote host?
   window.__env.configEndpoint = false;
-  window.__env.MAPBOX_API_KEY = "";
 
   // Environment name
   window.__env.ENVIRONMENT = "local"; // local | dev | test | prod

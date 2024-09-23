@@ -100,7 +100,7 @@ export class AuthService {
       this.loggerService.info('User is signed in.');
       this.loggerService.debug(JSON.stringify(this.user(), null, 2));
     } catch (e) {
-      this.user = null;
+      this.user.set(null);
       this.loggerService.info('User is not signed in.');
       this.loggerService.debug(e);
     }
