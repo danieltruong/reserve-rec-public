@@ -2,6 +2,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { inject, Injectable, OnDestroy } from '@angular/core';
 import { Subscription, merge, of, fromEvent, map, throwError, catchError } from 'rxjs';
 import { ConfigService } from './config.service';
+import { AuthService } from './auth.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +19,9 @@ export class ApiService implements OnDestroy {
   apiPath: string;
   env: 'local' | 'dev' | 'test' | 'prod';
 
-  constructor(private configService: ConfigService) {
+  constructor(private configService: ConfigService,
+              private authService: AuthService
+  ) {
     this.http = inject(HttpClient)
   }
 
@@ -75,8 +79,16 @@ export class ApiService implements OnDestroy {
   get(pk, queryParamsObject = null as any) {
     if (this.networkStatus) {
       const queryString = this.generateQueryString(queryParamsObject);
-      return this.http.get(`${this.apiPath}/${pk}?${queryString}`)
-             .pipe(catchError(this.errorHandler));
+      // If logged in, add the JWT token to the headers.
+      let headers;
+      if (this.authService.jwtToken) {
+        headers = new HttpHeaders().set('Authorization', `Bearer ${this.authService.jwtToken}`);
+        return this.http.get(`${this.apiPath}/${pk}?${queryString}`, { headers })
+                        .pipe(catchError(this.errorHandler));
+      } else {
+        return this.http.get(`${this.apiPath}/${pk}?${queryString}`)
+          .pipe(catchError(this.errorHandler));
+      }
     } else {
       throw 'Network Offline';
     }

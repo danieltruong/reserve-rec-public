@@ -12,6 +12,7 @@ import { LoggerService } from './logger.service';
 export class AuthService {
   public user = signal(null);
   public session = signal(null);
+  jwtToken: any;
 
   constructor(private configService: ConfigService, private loggerService: LoggerService) { }
 
@@ -61,6 +62,7 @@ export class AuthService {
         case 'signedIn':
           this.loggerService.info('User has signed in successfully.');
           await this.checkIfSignedIn();
+          this.jwtToken = this.session().credentials.sessionToken;
           await this.setRefresh();
           break;
         case 'signedOut':
@@ -97,11 +99,13 @@ export class AuthService {
   async checkIfSignedIn() {
     try {
       this.user.set(await getCurrentUser());
+      this.jwtToken = this.session().credentials.sessionToken;
       this.loggerService.info('User is signed in.');
       this.loggerService.debug(JSON.stringify(this.user(), null, 2));
     } catch (e) {
       this.user.set(null);
       this.loggerService.info('User is not signed in.');
+      this.setRefresh(true);
       this.loggerService.debug(e);
     }
   }
@@ -116,6 +120,7 @@ export class AuthService {
    */
   async setRefresh(forceRefresh = false) {
     this.session.set(await fetchAuthSession({ forceRefresh: forceRefresh }));
+    this.jwtToken = this.session().credentials.sessionToken;
     this.loggerService.debug(JSON.stringify(this.session(), null, 2));
     // Set refresh to half the expiry time
     const refreshInterval = ((this.session().tokens.accessToken.payload.exp * 1000) - Date.now()) / 2;

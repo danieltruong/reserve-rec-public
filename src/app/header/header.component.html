@@ -5,13 +5,8 @@
                 alt="Bootstrap" height="45">
         </a>
         <div class="d-flex">
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            <div>
-                bbbb
-            </div>
+          <input class="form-control me-2" type="text" ngDefaultControl (keyup.enter)="doSearch()" [(ngModel)]="searchBox" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" (click)="doSearch()">Search</button>
         </div>
         <!-- Sign in button -->
         <button class="navbar-toggler bg-warning" type="button" data-bs-toggle="offcanvas"
@@ -48,10 +43,6 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex mt-3" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
             </div>
         </div>
     </div>
