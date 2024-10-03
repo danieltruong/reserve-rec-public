@@ -120,7 +120,7 @@ export class AuthService {
    */
   async setRefresh(forceRefresh = false) {
     this.session.set(await fetchAuthSession({ forceRefresh: forceRefresh }));
-    this.jwtToken = this.session().credentials.sessionToken;
+    this.jwtToken = this.session().tokens.accessToken.toString();
     this.loggerService.debug(JSON.stringify(this.session(), null, 2));
     // Set refresh to half the expiry time
     const refreshInterval = ((this.session().tokens.accessToken.payload.exp * 1000) - Date.now()) / 2;
