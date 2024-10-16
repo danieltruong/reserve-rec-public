@@ -20,7 +20,7 @@ export class ApiService implements OnDestroy {
   env: 'local' | 'dev' | 'test' | 'prod';
 
   constructor(private configService: ConfigService,
-              private authService: AuthService
+    private authService: AuthService
   ) {
     this.http = inject(HttpClient)
   }
@@ -62,8 +62,8 @@ export class ApiService implements OnDestroy {
   checkNetworkStatus() {
     this.networkStatus = navigator.onLine;
     this.networkStatus$ = merge(of(null),
-                                fromEvent(window, 'online'),
-                                fromEvent(window, 'offline')
+      fromEvent(window, 'online'),
+      fromEvent(window, 'offline')
     )
       .pipe(map(() => navigator.onLine))
       .subscribe((status) => {
@@ -84,9 +84,10 @@ export class ApiService implements OnDestroy {
       if (this.authService.jwtToken) {
         headers = new HttpHeaders().set('Authorization', `Bearer ${this.authService.jwtToken}`);
         return this.http.get(`${this.apiPath}/${pk}?${queryString}`, { headers })
-                        .pipe(catchError(this.errorHandler));
+          .pipe(catchError(this.errorHandler));
       } else {
-        return this.http.get(`${this.apiPath}/${pk}?${queryString}`)
+        headers = new HttpHeaders().set('Authorization', `guest`);
+        return this.http.get(`${this.apiPath}/${pk}?${queryString}`, { headers })
           .pipe(catchError(this.errorHandler));
       }
     } else {

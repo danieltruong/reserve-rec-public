@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { SearchService } from '../services/search.service';
 import { FormsModule } from '@angular/forms';
+import { ProfileOffcanvasComponent } from '../profile-offcanvas/profile-offcanvas.component';
 
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ProfileOffcanvasComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
