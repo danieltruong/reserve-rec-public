@@ -6,6 +6,7 @@ import { ConfigService } from '../services/config.service';
 import { SearchService } from '../services/search.service';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -21,7 +22,17 @@ describe('HeaderComponent', () => {
         ConfigService,
         SearchService,
         provideHttpClient(),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: {
+                get: () => '',
+              },
+            },
+          },
+        },
       ]
     }).compileComponents();
 
