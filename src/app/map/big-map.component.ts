@@ -226,7 +226,7 @@ export class BigMapComponent implements OnInit {
   ngOnInit() {
     this.map = new maplibregl.Map({
       container: 'map',
-      style: 'https://api.maptiler.com/maps/hybrid/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
+      style: 'https://api.maptiler.com/maps/hybrid/style.json?key=wOk2yuh64kuoeWA7cTAK',
       center: [-123.19, 48.24],
       zoom: 5,
       maxBounds: [
