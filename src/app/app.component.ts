@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from './footer/footer.component';
-import { BigMapComponent } from './map/big-map.component';
+import { BigMapComponent } from './big-map/big-map.component';
 import { LoginComponent } from './login/login.component';
 
 @Component({

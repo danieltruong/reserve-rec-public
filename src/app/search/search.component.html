@@ -1,0 +1,35 @@
+<div class="row m-0 p-0 h-100">
+    <!-- Cards -->
+    <div class="col-6">
+        <div class="row p-3 card-view">
+            <div class="col-12 p-0" *ngIf="!data">
+                You must provide a search term.
+            </div>
+            <div class="col-12 p-0" *ngIf="data?.length === 0">
+                No search results.
+            </div>
+            <ng-container *ngFor="let item of data">
+                <div class="col-4 p-0">
+                    <div class="card">
+                        <img src="https://64.media.tumblr.com/7fd9c899b7a8214e3686414b098914c0/tumblr_plmmzrgMx91y27xwio3_250.gifv"
+                            class="card-img-top" alt="placeholder">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item._source.name? item._source.name : item._source.displayName}}
+                            </h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <!-- <a href="#" class="btn btn-primary">Find on map</a> -->
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <!-- Map -->
+    <div class="col-6 m-0 p-0 h-100">
+        <app-big-map></app-big-map>
+    </div>
+</div>

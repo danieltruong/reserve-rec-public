@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { AlphaPageComponent } from '../alpha-page/alpha-page.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [AlphaPageComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

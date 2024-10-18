@@ -1,0 +1,15 @@
+.card-view {
+  position: fixed;
+  overflow-y: scroll;
+  height: calc(100% - 131.73px);
+  width: 50%;
+
+  /* IE and Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+.card-view::-webkit-scrollbar {
+  display: none;
+}

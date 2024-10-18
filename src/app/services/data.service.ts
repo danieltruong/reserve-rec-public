@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 interface cacheData {
   expiry: number | null;
@@ -17,14 +16,14 @@ export class DataService {
   }
 
   initItem(id): void {
-    this.data[id] = new BehaviorSubject(null);
+    this.data[id] = signal(null);
   }
 
   setItemValue(id, value): void {
     if (!this.checkIfDataExists(id)) {
       this.initItem(id);
     }
-    this.data[id].next(value);
+    this.data[id].set(value);
   }
 
   // Append array data to existing dataService id
@@ -35,7 +34,7 @@ export class DataService {
       return [];
     } else {
       const appendObj = this.getItemValue(id).concat(value);
-      this.data[id].next(appendObj);
+      this.data[id].set(appendObj);
       return appendObj;
     }
   }
@@ -48,7 +47,7 @@ export class DataService {
       return null;
     } else {
       const assignObj = Object.assign(this.getItemValue(id), value);
-      this.data[id].next(assignObj);
+      this.data[id].set(assignObj);
       return assignObj;
     }
   }
@@ -64,7 +63,7 @@ export class DataService {
     if (!this.checkIfDataExists(id)) {
       this.initItem(id);
     }
-    return this.data[id].value;
+    return this.data[id]();
   }
 
   clearItemValue(id): void {
@@ -76,7 +75,7 @@ export class DataService {
   }
 
   initCacheItem(id): void {
-    this.data[id] = new BehaviorSubject<cacheData>({
+    this.data[id] = signal({
       expiry: null,
       data: null
     });
@@ -84,7 +83,7 @@ export class DataService {
 
   checkIfCacheValid(id) {
     const now = Date.now();
-    const expiry = this.data[id]?.value?.expiry
+    const expiry = this.data[id]()?.expiry
     if (expiry && now > expiry) {
       // cache expired
       return false;
@@ -98,7 +97,7 @@ export class DataService {
     }
     if (this.checkIfCacheValid(id)) {
       // cache is valid
-      return this.data[id].value?.data;
+      return this.data[id]()?.data;
     }
     // cache is invalid (expired)
     return null;
@@ -116,7 +115,6 @@ export class DataService {
       // set cache expiry
       cache.expiry = Date.now() + (timeout * 1000);
     }
-    this.data[id].next(cache);
+    this.data[id].set(cache);
   }
-
 }

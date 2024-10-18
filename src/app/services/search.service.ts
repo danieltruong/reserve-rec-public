@@ -35,7 +35,6 @@ export class SearchService {
     };
     try {
       const res: any[] = (await lastValueFrom(this.apiService.get(`search`, queryParams)))['data']['hits'];
-      console.log("res:", res);
       this.dataService.setItemValue(Constants.dataIds.SEARCH_RESULTS, res);
     } catch (error) {
       this.loggerService.error(error);
