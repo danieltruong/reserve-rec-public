@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
 import { DataService } from './data.service';
+import { signal } from '@angular/core';
 
 describe('DataService', () => {
   let service: DataService;
@@ -8,9 +8,9 @@ describe('DataService', () => {
   beforeEach(() => {
     // put mockData inside beforeEach, otherwise mutations persist across tests!
     const mockData = {
-      mock1: new BehaviorSubject('value1'),
-      mock2: new BehaviorSubject(['value21, value22, value23']),
-      mock3: new BehaviorSubject({ mock31: 'value31' }),
+      mock1: signal('value1'),
+      mock2: signal(['value21, value22, value23']),
+      mock3: signal({ mock31: 'value31' }),
     };
     TestBed.configureTestingModule({});
     service = TestBed.inject(DataService);
@@ -64,6 +64,6 @@ describe('DataService', () => {
   });
 
   it('provides a subscription point for watching data', async () => {
-    expect(service.watchItem('mock1').value).toEqual('value1');
+    expect(service.watchItem('mock1')()).toEqual('value1');
   });
 });
