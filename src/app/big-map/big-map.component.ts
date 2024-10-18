@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, effect, OnInit } from '@angular/core';
 import { MapComponent, ControlComponent, PopupComponent, MarkerComponent, LayerComponent } from '@maplibre/ngx-maplibre-gl';
 import maplibregl from 'maplibre-gl';
-import 'maplibre-gl/dist/maplibre-gl.css';
 import { Constants } from '../constants';
 import { DataService } from '../services/data.service';
 
