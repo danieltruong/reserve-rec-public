@@ -11,7 +11,7 @@
             <ng-container *ngFor="let item of data">
                 <div class="col-4 p-0">
                     <div class="card">
-                        <img src="https://64.media.tumblr.com/7fd9c899b7a8214e3686414b098914c0/tumblr_plmmzrgMx91y27xwio3_250.gifv"
+                        <img src="{{item._source.imageUrl}}" alt="https://64.media.tumblr.com/7fd9c899b7a8214e3686414b098914c0/tumblr_plmmzrgMx91y27xwio3_250.gifv"
                             class="card-img-top" alt="placeholder">
                         <div class="card-body">
                             <h5 class="card-title">{{item._source.name? item._source.name : item._source.displayName}}

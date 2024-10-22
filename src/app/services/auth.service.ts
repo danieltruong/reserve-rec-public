@@ -3,7 +3,7 @@ import { Amplify } from "aws-amplify";
 import { ConfigService } from './config.service';
 import { getCurrentUser } from 'aws-amplify/auth/cognito';
 import { Hub } from 'aws-amplify/utils';
-import { fetchAuthSession } from 'aws-amplify/auth';
+import { fetchAuthSession, signOut } from 'aws-amplify/auth';
 import { LoggerService } from './logger.service';
 
 @Injectable({
@@ -97,17 +97,17 @@ export class AuthService {
    * @throws Will throw an error if the user is not signed in.
    */
   async checkIfSignedIn() {
+    // check if there's a current user first
     try {
       this.user.set(await getCurrentUser());
-      this.jwtToken = this.session().credentials.sessionToken;
-      this.loggerService.info('User is signed in.');
-      this.loggerService.debug(JSON.stringify(this.user(), null, 2));
-    } catch (e) {
+      this.session.set(await fetchAuthSession());
+      this.jwtToken = this.session()?.credentials?.sessionToken;
+    } catch (error) {
+      this.loggerService.debug('No user is currently signed in.');
       this.user.set(null);
-      this.loggerService.info('User is not signed in.');
-      this.setRefresh(true);
-      this.loggerService.debug(e);
+      this.session.set(null);
     }
+
   }
 
   /**
@@ -136,5 +136,9 @@ export class AuthService {
         }, refreshInterval);
       }
     }
+  }
+
+  async logout() {
+    await signOut();
   }
 }

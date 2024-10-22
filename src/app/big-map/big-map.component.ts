@@ -43,6 +43,10 @@ export class BigMapComponent implements OnInit, AfterViewInit {
   updateMap() {
     this.data.forEach(item => {
       if (item._source.location && item._source.location.coordinates) {
+        const existingMarkers = document.getElementsByClassName('maplibregl-marker');
+        while (existingMarkers.length > 0) {
+          existingMarkers[0].remove();
+        }
         // const displayText = item._source.displayName || item._source.name || 'Unknown';
         const popupContent = Object.entries(item._source)
           .map(([key, value]) => `<strong>${key}:</strong> ${value}`)
