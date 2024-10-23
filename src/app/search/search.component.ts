@@ -4,6 +4,7 @@ import { DataService } from '../services/data.service';
 import { Constants } from '../constants';
 import { BigMapComponent } from '../big-map/big-map.component';
 import { CommonModule } from '@angular/common';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   standalone: true,
@@ -14,11 +15,17 @@ import { CommonModule } from '@angular/common';
 })
 export class SearchComponent {
   public data = null;
+  public loading = false;
 
-  constructor(private dataService: DataService) {
+
+  constructor(private dataService: DataService, private loadingService: LoadingService) {
     effect(() => {
       this.data = this.dataService.watchItem(Constants.dataIds.SEARCH_RESULTS)();
       console.log("Search results: ", this.data);
+    });
+
+    effect(() => {
+      this.loading = this.loadingService.isLoading();
     });
   }
 }

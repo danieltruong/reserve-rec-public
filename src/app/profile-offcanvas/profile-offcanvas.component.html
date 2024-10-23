@@ -15,8 +15,8 @@
                     routerLink="/login">Sign up / Log in</a>
             </li>
             <li class="nav-item" *ngIf="user">
-                <a class="nav-link active" role="button" aria-current="page" data-bs-dismiss="offcanvas"
-                    aria-label="Close" (click)="logout()">Log out</a>
+                <button type="button" class="btn btn-link" aria-current="page" data-bs-dismiss="offcanvas"
+                    aria-label="Close" (click)="logout()">Log out</button>
             </li>
         </ul>
     </div>

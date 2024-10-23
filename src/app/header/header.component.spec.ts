@@ -7,6 +7,7 @@ import { SearchService } from '../services/search.service';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ActivatedRoute } from '@angular/router';
+import { provideToastr } from 'ngx-toastr';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -22,6 +23,7 @@ describe('HeaderComponent', () => {
         ConfigService,
         SearchService,
         provideHttpClient(),
+        provideToastr(),
         provideHttpClientTesting(),
         {
           provide: ActivatedRoute,

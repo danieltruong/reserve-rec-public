@@ -104,6 +104,7 @@ export class AuthService {
       this.jwtToken = this.session()?.credentials?.sessionToken;
     } catch (error) {
       this.loggerService.debug('No user is currently signed in.');
+      this.loggerService.debug(error);
       this.user.set(null);
       this.session.set(null);
     }
