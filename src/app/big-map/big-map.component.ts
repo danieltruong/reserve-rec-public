@@ -67,7 +67,7 @@ export class BigMapComponent implements OnInit, AfterViewInit {
               'fill-opacity': 0.8
             }
           });
-            const content = `<strong>${item._source.displayName}</strong><p><img src='${item._source.imageUrl}' style='max-width: 225px; max-height: 225px; cursor: pointer;' onclick="window.open('${item._source.imageUrl}', '_blank')"/></p><p>ID: ${item._id.split('#')[1]}</p>`;
+          const content = `<strong>${item._source.displayName}</strong><p><img src='${item._source.imageUrl}' style='max-width: 225px; max-height: 225px; cursor: pointer;' onclick="window.open('${item._source.imageUrl}', '_blank')"/></p><p>ID: ${item._id.split('#')[1]}</p>`;
           this.map.on('click', `source-${item._id}`, (e) => {
             new maplibregl.Popup()
               .setLngLat(e.lngLat)
