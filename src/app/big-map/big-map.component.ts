@@ -75,8 +75,6 @@ export class BigMapComponent implements OnInit, AfterViewInit {
               .addTo(this.map);
           });
         }
-
-        const displayText = item._source.displayName || item._source.name || 'Unknown';
         const popupContent = Object.entries(item._source)
           .map(([key, value]) => `<strong>${key}:</strong> ${value}`)
           .join('<br>');
