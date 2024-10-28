@@ -29,7 +29,7 @@ export class BigMapComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.map = new maplibregl.Map({
       container: 'map',
-      style: 'https://api.maptiler.com/maps/hybrid/style.json?key=wOk2yuh64kuoeWA7cTAK',
+      style: 'https://demotiles.maplibre.org/style.json',
       center: [-123.19, 48.24],
       zoom: 5,
       maxBounds: [
@@ -43,11 +43,40 @@ export class BigMapComponent implements OnInit, AfterViewInit {
   updateMap() {
     this.data.forEach(item => {
       if (item._source.location && item._source.location.coordinates) {
-        const existingMarkers = document.getElementsByClassName('maplibregl-marker');
-        while (existingMarkers.length > 0) {
-          existingMarkers[0].remove();
+
+        if (item._source?.boundary?.type === 'MultiPolygon') {
+          console.log(JSON.stringify(item._source?.boundary.coordinates[0]))
+          this.map.addSource(`source-${item._id}`, {
+            type: 'geojson',
+            data: {
+              type: 'Feature',
+              geometry: {
+                type: 'Polygon',
+                coordinates: item._source?.boundary?.coordinates[0]
+              },
+              properties: item._source
+            }
+          });
+          this.map.addLayer({
+            'id': `source-${item._id}`,
+            'type': 'fill',
+            'source': `source-${item._id}`,
+            'layout': {},
+            'paint': {
+              'fill-color': '#088',
+              'fill-opacity': 0.8
+            }
+          });
+            const content = `<strong>${item._source.displayName}</strong><p><img src='${item._source.imageUrl}' style='max-width: 225px; max-height: 225px; cursor: pointer;' onclick="window.open('${item._source.imageUrl}', '_blank')"/></p><p>ID: ${item._id.split('#')[1]}</p>`;
+          this.map.on('click', `source-${item._id}`, (e) => {
+            new maplibregl.Popup()
+              .setLngLat(e.lngLat)
+              .setHTML(content)
+              .addTo(this.map);
+          });
         }
-        // const displayText = item._source.displayName || item._source.name || 'Unknown';
+
+        const displayText = item._source.displayName || item._source.name || 'Unknown';
         const popupContent = Object.entries(item._source)
           .map(([key, value]) => `<strong>${key}:</strong> ${value}`)
           .join('<br>');
