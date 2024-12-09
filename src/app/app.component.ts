@@ -2,14 +2,12 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from './footer/footer.component';
-import { BigMapComponent } from './big-map/big-map.component';
-import { LoginComponent } from './login/login.component';
 import { InfiniteLoadingBarComponent } from './infinite-loading-bar/infinite-loading-bar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, BigMapComponent, LoginComponent, InfiniteLoadingBarComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, InfiniteLoadingBarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

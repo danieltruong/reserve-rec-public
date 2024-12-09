@@ -21,7 +21,7 @@ export class SearchBarComponent {
     console.log("Searching for: ", this.searchBox);
     // Get search results and put into data service
     if (this.searchBox !== '') {
-      this.searchService.searchForSomething(this.searchBox);
+      this.searchService.getFacilities(this.searchBox);
     }
 
     // Then navigate to search page

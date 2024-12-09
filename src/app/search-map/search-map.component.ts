@@ -1,49 +1,35 @@
-import { AfterViewInit, Component, effect, OnInit } from '@angular/core';
-import { MapComponent, ControlComponent, PopupComponent, MarkerComponent, LayerComponent } from '@maplibre/ngx-maplibre-gl';
+import { AfterViewInit, Component, effect, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import maplibregl from 'maplibre-gl';
 import { Constants } from '../constants';
 import { DataService } from '../services/data.service';
+import { Map } from 'maplibre-gl';
 
 @Component({
   standalone: true,
-  selector: 'app-big-map',
-  templateUrl: './big-map.component.html',
-  styleUrls: ['./big-map.component.scss'],
-  imports: [MapComponent, ControlComponent, PopupComponent, MarkerComponent, LayerComponent]
+  selector: 'app-search-map',
+  templateUrl: './search-map.component.html',
+  styleUrls: ['./search-map.component.scss'],
 })
-export class BigMapComponent implements OnInit, AfterViewInit {
-  public map;
-  public data = [];
+export class SearchMapComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('searchMap')
+  private mapContainer!: ElementRef<HTMLElement>;
+  private map: Map | undefined;
+  private markerArray = [];
 
-  private mapLoaded = false;
+  public data = [];
 
   constructor(private dataService: DataService) {
     effect(() => {
-      this.data = this.dataService.watchItem(Constants.dataIds.SEARCH_RESULTS)()
-      if (this.mapLoaded) {
-        this.updateMap();
-      }
+      this.data = this.dataService.watchItem(Constants.dataIds.SEARCH_RESULTS)() || [];
+      this.updateMap();
     });
-  }
-
-  ngOnInit() {
-    this.map = new maplibregl.Map({
-      container: 'map',
-      style: 'https://demotiles.maplibre.org/style.json',
-      center: [-123.19, 48.24],
-      zoom: 5,
-      maxBounds: [
-        [-141.06, 46.30], // Southwest coordinates of BC (approximate)
-        [-112.03, 62.00]  // Northeast coordinates of BC (approximate)
-      ]
-    });
-    this.map.addControl(new maplibregl.NavigationControl());
   }
 
   updateMap() {
+    this.markerArray.forEach(marker => marker.remove());
+
     this.data.forEach(item => {
       if (item._source.location && item._source.location.coordinates) {
-
         if (item._source?.boundary?.type === 'MultiPolygon') {
           console.log(JSON.stringify(item._source?.boundary.coordinates[0]))
           this.map.addSource(`source-${item._id}`, {
@@ -78,18 +64,32 @@ export class BigMapComponent implements OnInit, AfterViewInit {
         const popupContent = Object.entries(item._source)
           .map(([key, value]) => `<strong>${key}:</strong> ${value}`)
           .join('<br>');
-        new maplibregl.Marker()
+        const marker = new maplibregl.Marker()
           .setLngLat([item._source.location.coordinates[0], item._source.location.coordinates[1]])
           .setPopup(new maplibregl.Popup({ offset: 25 }).setHTML(popupContent))
-          .addTo(this.map);
+
+        this.markerArray.push(marker)
+        marker.addTo(this.map);
       }
     });
   }
 
   ngAfterViewInit() {
-    this.map.on('load', () => {
-      this.mapLoaded = true;
-      this.updateMap();
+    this.map = new Map({
+      container: this.mapContainer.nativeElement,
+      style: 'https://demotiles.maplibre.org/style.json',
+      center: [-123.19, 48.24],
+      zoom: 5,
+      // maxBounds: [
+      //   [-141.06, 46.30], // Southwest coordinates of BC (approximate)
+      //   [-112.03, 62.00]  // Northeast coordinates of BC (approximate)
+      // ]
     });
+
+    this.map.addControl(new maplibregl.NavigationControl());
+  }
+
+  ngOnDestroy() {
+    this.map?.remove();
   }
 }
