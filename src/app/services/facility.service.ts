@@ -18,13 +18,17 @@ export class FacilityService {
     private loadingService: LoadingService
   ) { }
 
-  async getFacilityDetails(orcs: string, facilityType: string, facilityId: string, fetchActivities: boolean = true) {
+  async getFacility(orcs: string, facilityType: string, facilityId: string, fetchActivities: boolean = true) {
     const queryParams = {
       orcs: orcs,
       facilityType: facilityType,
       facilityId: facilityId,
-      fetchActivities: fetchActivities
     };
+
+    if(fetchActivities) {
+      queryParams['fetchActivities'] = true;
+    }
+
     try {
       this.loadingService.addToFetchList(Constants.dataIds.FACILITY_DETAILS_RESULT);
       const res = (await lastValueFrom(this.apiService.get(`facilities`, queryParams)))['data'];

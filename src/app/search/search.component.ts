@@ -31,6 +31,6 @@ export class SearchComponent {
 
   navigate(orcs: string, facilityType: string, facilityId: string) {
     console.log(orcs, facilityType, facilityId);
-    this.router.navigate(['/facility-details', orcs, facilityType, facilityId]);
+    this.router.navigate(['/facility', orcs, facilityType, facilityId]);
   }
 }

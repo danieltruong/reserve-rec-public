@@ -1,5 +1,5 @@
 import { Component, effect, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Constants } from '../constants';
 import { DataService } from '../services/data.service';
 import { FacilityService } from '../services/facility.service';
@@ -19,7 +19,7 @@ export class FacilityDetailsComponent implements OnInit {
   public identifier;
   public data = null;
 
-  constructor(private route: ActivatedRoute, private facilityService: FacilityService, private dataService: DataService) {
+  constructor(private route: ActivatedRoute, private router: Router, private facilityService: FacilityService, private dataService: DataService) {
     effect(() => {
       this.data = this.dataService.watchItem(Constants.dataIds.FACILITY_DETAILS_RESULT)();
       console.log(this.data)
@@ -32,6 +32,10 @@ export class FacilityDetailsComponent implements OnInit {
     this.facilityType = params.get('facilityType');
     this.identifier = params.get('identifier');
 
-    this.facilityService.getFacilityDetails(this.orcs, this.facilityType, this.identifier);
+    this.facilityService.getFacility(this.orcs, this.facilityType, this.identifier);
+  }
+
+  navigate(orcs, activityType, identifier) {
+    this.router.navigate(['/activity', orcs, activityType, identifier]);
   }
 }
