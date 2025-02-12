@@ -16,8 +16,8 @@
         <div *ngFor="let product of data?.products">
             <div class="row">
                 <div class="col-11">
-                    <h3>{{product.displayName}}</h3>
-                    <p>{{product.description}}</p>
+                    <app-product-details [product]="product"></app-product-details>
+
                 </div>
                 <div class="col-1">
                     <!-- <button class="btn btn-primary" (click)="navigate(product.orcs, product.productType

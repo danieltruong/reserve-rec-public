@@ -23,7 +23,9 @@ export class DataService {
     if (!this.checkIfDataExists(id)) {
       this.initItem(id);
     }
-    this.data[id].set(value);
+    if (JSON.stringify(this.getItemValue(id)) !== JSON.stringify(value)) {
+      this.data[id].set(value);
+    }
   }
 
   // Append array data to existing dataService id

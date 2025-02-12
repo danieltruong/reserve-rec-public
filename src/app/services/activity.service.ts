@@ -25,17 +25,16 @@ export class ActivityService {
       activityId: activityId,
     };
 
-    if(fetchFacilities) {
+    if (fetchFacilities) {
       queryParams['fetchFacilities'] = true;
     }
-    if(fetchProducts) {
+    if (fetchProducts) {
       queryParams['fetchProducts'] = true;
     }
 
     try {
       this.loadingService.addToFetchList(Constants.dataIds.ACTIVITY_DETAILS_RESULT);
       const res = (await lastValueFrom(this.apiService.get(`activities`, queryParams)))['data'];
-      console.log(res);
       this.dataService.setItemValue(Constants.dataIds.ACTIVITY_DETAILS_RESULT, res);
       this.loadingService.removeFromFetchList(Constants.dataIds.ACTIVITY_DETAILS_RESULT);
     } catch (error) {
